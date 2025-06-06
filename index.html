@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Form - Glassmorphic Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      background: url('https://avatarfiles.alphacoders.com/375/thumb-1920-375211.png') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .contact-form {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 35px 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      max-width: 500px;
+      width: 100%;
+      color: #fff;
+    }
+
+    .contact-form h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      outline: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #ddd;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid #4CAF50;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      margin-top: 5px;
+    }
+
+    .success-message {
+      color: #00e676;
+      font-size: 1rem;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .submit-btn {
+      background: #000000e9;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 1rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #707871;
+    }
+
+    @media (max-width: 600px) {
+      .contact-form {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contact-form">
+    <h2>Contact Us</h2>
+    <form id="contactForm" novalidate>
+      <div class="form-group">
+        <label for="name">Name *</label>
+        <input type="text" id="name" name="name" placeholder="Your name" />
+        <div class="error-message" id="nameError"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" />
+        <div class="error-message" id="emailError"></div>
+      </div>
+      <div class="form-group">
+        <label for="message">Message *</label>
+        <textarea id="message" name="message" placeholder="Your message here..."></textarea>
+        <div class="error-message" id="messageError"></div>
+      </div>
+      <button type="submit" class="submit-btn">Send Message</button>
+      <div class="success-message" id="successMessage"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
+    const messageField = document.getElementById('message');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const messageError = document.getElementById('messageError');
+    const successMessage = document.getElementById('successMessage');
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+    const clearErrors = () => {
+      nameError.textContent = '';
+      emailError.textContent = '';
+      messageError.textContent = '';
+      successMessage.textContent = '';
+    };
+
+    const validateForm = () => {
+      let valid = true;
+      clearErrors();
+
+      const name = nameField.value.trim();
+      const email = emailField.value.trim();
+      const message = messageField.value.trim();
+
+      if (!name) {
+        nameError.textContent = "Name is required.";
+        valid = false;
+      }
+
+      if (!email) {
+        emailError.textContent = "Email is required.";
+        valid = false;
+      } else if (!emailRegex.test(email)) {
+        emailError.textContent = "Invalid email format.";
+        valid = false;
+      }
+
+      if (!message) {
+        messageError.textContent = "Message is required.";
+        valid = false;
+      }
+
+      return valid;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateForm()) {
+        successMessage.textContent = "Your message has been sent successfully!";
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
